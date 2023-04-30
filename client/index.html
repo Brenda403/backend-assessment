@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Back End Assessment</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="container">
+    <button id="complimentButton">Get a compliment</button>
+    <button id="fortuneButton">Get a fortune</button>
+
+    <!-- Gratitude -->
+    <button id="gratidudePromptBtn">Gratitude Prompt</button>
+    <form id="gratitudePromptDiv">
+      <input
+        type="text"
+        id="gratitudeInput"
+        placeholder="Gratitude Prompt Entry"
+      />
+      <button id="gratitudeSubmit">submit</button>
+    </form>
+    <section>
+      <button id="displayGratitude">Display Gratitudes</button>
+
+      <ul id="gratitude-list"></ul>
+    </section>
+
+    <!-- End Gratitude -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
