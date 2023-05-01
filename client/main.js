@@ -7,7 +7,7 @@ const gratitudeDiv = document.getElementById("gratitudePromptDiv");
 const gratitudePromptInput = document.getElementById("gratitudeInput");
 const gratitudePromptSubmit = document.getElementById("gratitudeSubmit");
 const displayGratitudeBtn = document.getElementById("displayGratitude");
-
+const deleteGratitudeBtn = document.getElementById("deleteGratitude");
 // sending request to controller?
 //existing feature
 const getCompliment = () => {
@@ -25,7 +25,7 @@ const getFortune = () => {
 };
 
 // 3 new features
-// feature 1
+// feature 1 - get prompts for gratitude message
 const getGratitudePrompt = () => {
   axios.get("http://localhost:4000/api/gratitude-prompt/").then((res) => {
     const data = res.data;
@@ -34,7 +34,7 @@ const getGratitudePrompt = () => {
     gratitudeDiv.style.display = "block";
   });
 };
-// feature 2
+// feature 2 - collect the messages user inputs
 
 const collectGratitude = (event) => {
   event.preventDefault();
@@ -47,7 +47,7 @@ const collectGratitude = (event) => {
     });
 };
 
-// feature 3
+// feature 3 - display the messages received by user
 const displayGratitude = () => {
   const gratitudeList = document.getElementById("gratitude-list");
   event.preventDefault();
@@ -62,9 +62,23 @@ const displayGratitude = () => {
   });
 };
 
+// feature 4 - delete the messages received by user
+const deleteGratitude = (index) => {
+  axios.delete(`http://localhost:4000/api/${index}`).then(() => {
+    displayGratitude();
+  });
+};
+
+// feature 5 - edit the messages received by user
+const updateGratitude = (index) => {
+  axios.put(`http://localhost:4000/api/${index}`).then(() => {
+    displayGratitude();
+  });
+};
 // event handler
 complimentBtn.addEventListener("click", getCompliment);
 fortuneBtn.addEventListener("click", getFortune);
 gratitudePromptButton.addEventListener("click", getGratitudePrompt);
 gratitudeDiv.addEventListener("submit", collectGratitude);
 displayGratitudeBtn.addEventListener("click", displayGratitude);
+deleteGratitudeBtn.addEventListener("click", deleteGratitude);

@@ -1,7 +1,4 @@
-gratitudes = [
-  "My dog made me smile today",
-  "I admire my parents for their grit and perseverance",
-];
+gratitude = [];
 module.exports = {
   getCompliment: (req, res) => {
     const compliments = [
@@ -44,11 +41,19 @@ module.exports = {
     res.status(200).send(randomPrompt);
   },
   collectGratitude: (req, res) => {
-    const message = req.body.message;
-    gratitudes.push(message);
-    res.status(200).send(message);
+    let message = req.body.gratitude;
+    gratitude.push(message);
+    res.status(200).send("gratitude message received");
   },
   displayGratitude: (req, res) => {
-    res.status(200).send(gratitudes);
+    res.status(200).send(gratitude);
+  },
+  deleteGratitude: (req, res) => {
+    const index = req.params.index;
+    gratitude.splice(index, 1);
+    res.status(200).send(gratitude);
+  },
+  updateGratitude: (req, res) => {
+    const index = req.params.index;
   },
 };
