@@ -8,6 +8,8 @@ const gratitudePromptInput = document.getElementById("gratitudeInput");
 const gratitudePromptSubmit = document.getElementById("gratitudeSubmit");
 const displayGratitudeBtn = document.getElementById("displayGratitude");
 const deleteGratitudeBtn = document.getElementById("deleteGratitude");
+const changeGratitudeBtn = document.getElementById("changeGratitude");
+
 // sending request to controller?
 //existing feature
 const getCompliment = () => {
@@ -24,7 +26,7 @@ const getFortune = () => {
   });
 };
 
-// 3 new features
+// at least 3 new features
 // feature 1 - get prompts for gratitude message
 const getGratitudePrompt = () => {
   axios.get("http://localhost:4000/api/gratitude-prompt/").then((res) => {
@@ -70,10 +72,21 @@ const deleteGratitude = (index) => {
 };
 
 // feature 5 - edit the messages received by user
-const updateGratitude = (index) => {
-  axios.put(`http://localhost:4000/api/${index}`).then(() => {
-    displayGratitude();
-  });
+const updateGratitude = (message) => {
+  const gratitudeList = document.getElementById("gratitude-list");
+  const gratitudeMessages = gratitudeList.getElementsByTagName("li");
+  // need last message from list...
+  const lastGratitudeMessage = gratitudeMessages[gratitudeMessages.length - 1];
+  const index = gratitudeMessages.length - 1;
+  const updatedMessage = prompt("enter updated gratitude message:");
+  axios
+    .put(`http://localhost:4000/api/gratitude/${index}`, {
+      message: updatedMessage,
+    })
+    .then(() => {
+      alert(res.data);
+      lastGratitudeMessage.textContent = updatedMessage;
+    });
 };
 // event handler
 complimentBtn.addEventListener("click", getCompliment);
@@ -82,3 +95,4 @@ gratitudePromptButton.addEventListener("click", getGratitudePrompt);
 gratitudeDiv.addEventListener("submit", collectGratitude);
 displayGratitudeBtn.addEventListener("click", displayGratitude);
 deleteGratitudeBtn.addEventListener("click", deleteGratitude);
+changeGratitudeBtn.addEventListener("click", updateGratitude);

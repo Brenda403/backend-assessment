@@ -1,4 +1,4 @@
-gratitude = [];
+let gratitude = [];
 module.exports = {
   getCompliment: (req, res) => {
     const compliments = [
@@ -54,6 +54,10 @@ module.exports = {
     res.status(200).send(gratitude);
   },
   updateGratitude: (req, res) => {
-    const index = req.params.index;
+    const { message } = req.body;
+    const { index } = req.params;
+
+    gratitude[index] = message;
+    res.status(200).send("Message Updated");
   },
 };
