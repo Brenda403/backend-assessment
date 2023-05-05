@@ -49,8 +49,9 @@ module.exports = {
     res.status(200).send(gratitude);
   },
   deleteGratitude: (req, res) => {
-    const index = req.params.index;
-    gratitude.splice(index, 1);
+    const { i } = req.body;
+    // const index = req.params.index;
+    gratitude.splice(i, 1);
     res.status(200).send(gratitude);
   },
   updateGratitude: (req, res) => {

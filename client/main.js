@@ -46,6 +46,8 @@ const collectGratitude = (event) => {
     })
     .then((res) => {
       alert(res.data);
+      // need to clear text input
+      gratitudePromptInput.value = "";
     });
 };
 
@@ -65,28 +67,44 @@ const displayGratitude = () => {
 };
 
 // feature 4 - delete the messages received by user
-const deleteGratitude = (index) => {
-  axios.delete(`http://localhost:4000/api/${index}`).then(() => {
-    displayGratitude();
-  });
+const deleteGratitude = () => {
+  const i = prompt(
+    "Enter the index (starting with 0 :)) of the message you want to delete:"
+  );
+  if (i === null) {
+    return "not valid entry";
+  }
+  axios
+    .delete(`http://localhost:4000/api/gratitude/${i}`, {
+      data: { i },
+    })
+    .then(() => {
+      displayGratitude();
+    });
 };
 
 // feature 5 - edit the messages received by user
 const updateGratitude = (message) => {
   const gratitudeList = document.getElementById("gratitude-list");
   const gratitudeMessages = gratitudeList.getElementsByTagName("li");
-  // need last message from list...
-  const lastGratitudeMessage = gratitudeMessages[gratitudeMessages.length - 1];
-  const index = gratitudeMessages.length - 1;
+
+  const index = prompt(
+    "Enter the index (starting with 0 :)) of the message you want to update:"
+  );
+  if (index === null) {
+    return "not valid entry";
+  }
   const updatedMessage = prompt("enter updated gratitude message:");
   axios
     .put(`http://localhost:4000/api/gratitude/${index}`, {
       message: updatedMessage,
     })
-    .then(() => {
+    .then((res) => {
       alert(res.data);
-      lastGratitudeMessage.textContent = updatedMessage;
-    });
+      // lastGratitudeMessage.textContent = updatedMessage;
+      gratitudeMessages[index].textContent = updatedMessage;
+    })
+    .catch((err) => console.log(err));
 };
 // event handler
 complimentBtn.addEventListener("click", getCompliment);
